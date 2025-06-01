@@ -11,6 +11,7 @@ const AddCoffee = () => {
     const formData = new FormData(form);
 
     const coffeeData = Object.fromEntries(formData.entries());
+    coffeeData.likes = [];
 
     fetch("http://localhost:3000/coffee", {
       method: "post",
@@ -21,10 +22,9 @@ const AddCoffee = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("post after data", data);
         if (data.insertedId) {
-          notify()
-          e.target.reset()
+          notify();
+          e.target.reset();
         }
       });
   };

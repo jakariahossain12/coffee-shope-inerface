@@ -1,28 +1,34 @@
 import React from "react";
 import { useLoaderData, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const UpDate = () => {
-  const { name, chef, supplier, taste, price, details, photo,_id } =
+  const { name, chef, supplier, taste, price, details, photo, _id } =
     useLoaderData();
   const nevgate = useNavigate();
   const handleUpDate = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-      const coffeeData = Object.fromEntries(formData.entries());
-      
-      fetch(`http://localhost:3000/coffee/${_id}`, {
-          method: 'put',
-          headers: {
-              'content-type':'application/json'
-          },
-          body:JSON.stringify(coffeeData)
-      })
-        .then((res) => res.json())
-          .then((data) => {
-            alert('update successfully')
-          console.log("data after update", data);
+    const coffeeData = Object.fromEntries(formData.entries());
+
+    fetch(`http://localhost:3000/coffee/${_id}`, {
+      method: "put",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(coffeeData),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your account create successfully",
+          showConfirmButton: false,
+          timer: 3000,
         });
+      });
   };
   return (
     <div className="min-h-screen bg-[#f4f3f0] p-8">

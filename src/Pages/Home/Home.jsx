@@ -5,7 +5,8 @@ import PopularProducts from '../../components/PopularProducts/PopularProducts';
 import { useLoaderData } from 'react-router';
 
 const Home = () => {
-    const coffeeDataArray = useLoaderData();
+  const coffeeDataArray = useLoaderData();
+  console.log(coffeeDataArray);
     return (
       <div>
         <Hero></Hero>
