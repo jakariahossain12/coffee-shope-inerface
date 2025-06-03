@@ -56,11 +56,11 @@ const CoffeeItem = ({ coffee, coffeeData, setCoffeeData }) => {
 
           {/* <!-- Action Buttons --> */}
           <div className="flex space-x-2 pt-2">
-            <button className="bg-yellow-300 cursor-pointer hover:bg-yellow-400 text-white p-2 rounded">
+            <Link to={`coffee-details/${_id}`} className="bg-yellow-300 cursor-pointer hover:bg-yellow-400 text-white p-2 rounded">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 4a8 8 0 100 16 8 8 0 000-16zm1 11h-2v-2h2v2zm0-4h-2V7h2v4z" />
               </svg>
-            </button>
+            </Link>
             <button
               onClick={() => handleDelete(_id)}
               className="bg-red-500 cursor-pointer hover:bg-red-600 text-white p-2 rounded"

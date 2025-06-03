@@ -1,9 +1,11 @@
-import React from "react";
+import React, { use } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../Context/Context";
 
 const AddCoffee = () => {
   const nevgate = useNavigate();
+  const {user}= use(AuthContext)
   const notify = () => toast.success("coffee add successfully");
   const handleAddCoffee = (e) => {
     e.preventDefault();
@@ -12,6 +14,9 @@ const AddCoffee = () => {
 
     const coffeeData = Object.fromEntries(formData.entries());
     coffeeData.likes = [];
+    coffeeData.quantity = 40;
+    coffeeData.email = user.email
+
 
     fetch("http://localhost:3000/coffee", {
       method: "post",

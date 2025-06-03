@@ -6,7 +6,14 @@ import UpDate from "../Pages/UpDate/UpDate";
 import SignIn from "../Pages/SignIn/SignIn";
 import SignUp from "../Pages/SignUp/SignUp";
 import CoffeeUsers from "../Pages/CoffeeUsers/CoffeeUsers";
-export const router = createBrowserRouter([
+import CoffeeDetails from "../Pages/CoffeeDetails/CoffeeDetails";
+
+import { AuthContext } from "../Context/Context";
+import MyCoffee from "../Pages/MyCoffee/MyCoffee";
+
+
+export const router = createBrowserRouter(
+  [
   {
     path: "/",
     Component: RootLayOut,
@@ -36,11 +43,18 @@ export const router = createBrowserRouter([
       },
       {
         path: "coffee-users",
-        loader: () => fetch("http://localhost:3000/coffee/user", {
-          credentials:'include'
-        }),
         Component: CoffeeUsers,
       },
+      {
+        path: "coffee-details/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/coffee/${params.id}`),
+        Component: CoffeeDetails,
+      },
+      {
+        path: 'my-coffee',
+        Component:MyCoffee,
+      }
     ],
   },
 ]);

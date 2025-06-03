@@ -1,26 +1,31 @@
+
 import React, { use, useEffect, useState } from "react";
 // import { useLoaderData } from "react-router";
 import { AuthContext } from "../../Context/Context";
 import Swal from "sweetalert2";
+const MyCoffee = () => {
+    const { user,userDelete } = use(AuthContext);
 
-const CoffeeUsers = () => {
-  
-  const { user,userDelete } = use(AuthContext);
-
-  const [usersData, setUsersData] = useState([]);
-
+    const [usersData, setUsersData] = useState([]);
+    
 
   useEffect(() => {
-    
-    fetch("http://localhost:3000/coffee/user")
-      .then((res) => res.json())
-      .then((data) => {
-        setUsersData(data);
+    const token = user?.accessToken
+    console.log(token);
+      fetch(`http://localhost:3000/my-coffee?email=jakaria@gmail.com`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  },[user])
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setUsersData(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  },[user,user?.email])
 
 
 
@@ -73,31 +78,31 @@ const CoffeeUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {usersData.map((user) => (
-              <tr key={user._id} className="border-b-2 border-b-blue-700">
+            {usersData.map((coffee) => (
+              <tr key={coffee._id} className="border-b-2 border-b-blue-700">
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="mask mask-squircle h-12 w-12">
                         <img
-                          src={user?.photo}
+                          src={coffee?.photo}
                           alt="Avatar Tailwind CSS Component"
                         />
                       </div>
                     </div>
                     <div>
-                      <div className="font-bold">{user?.name}</div>
-                      <div className="text-sm opacity-50">{user?.address}</div>
+                      <div className="font-bold">{coffee?.name}</div>
+                      
                     </div>
                   </div>
                 </td>
-                <td>{user?.email}</td>
-                <td>{user?.phone}</td>
-                <td>{user?.lastSignInTime}</td>
+                <td>{coffee?.email}</td>
+               
+                
                 <th>
                   <button className="btn btn-ghost btn-xs">E</button>
                   <button
-                    onClick={() => handleDelete(user?._id)}
+                    onClick={() => handleDelete(coffee?._id)}
                     className="btn btn-ghost btn-xs"
                   >
                     X
@@ -108,8 +113,7 @@ const CoffeeUsers = () => {
           </tbody>
         </table>
       </div>
-    </div>
-  );
+    </div>)
 };
 
-export default CoffeeUsers;
+export default MyCoffee;
